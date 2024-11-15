@@ -26,7 +26,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Publish js filename
-        run: find dist/assets/*.js -type f -execdir echo 'script-file={}'>>$GITHUB_OUTPUT ';'
+        run: |
+          FILE=$(find dist/assets/*.js -type f || echo "No file found")
+          echo "script-file=$FILE" >> $GITHUB_OUTPUT
       - name: Build website
         run: npm run build
       - name: upload artifacts
